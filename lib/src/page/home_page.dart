@@ -4,6 +4,9 @@ import 'package:componentes/src/provaiders/menu_provaider.dart';
 import 'package:componentes/src/utils/icono_string_util.dart';
 
 
+import 'package:componentes/src/page/alert_page.dart';
+
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class HomePage extends StatelessWidget {
 
         return ListView(
           //retornamos al clase listView como hijo nuestro componenet a renderizar
-          children: _listItems( snapshot.data ),
+          children: _listItems( snapshot.data, context ),
         );
 
       },
@@ -39,7 +42,7 @@ class HomePage extends StatelessWidget {
   }
 
   //este es el componente que utilizamos para renderizar todas las propiedades del json
-  List<Widget>  _listItems( List<dynamic> data ) {
+  List<Widget>  _listItems( List<dynamic> data, BuildContext context ) {
 
     //creamos una varianles que sera un list Widget que sea lo que retornemos
     final List<Widget> opciones = [];
@@ -51,7 +54,17 @@ class HomePage extends StatelessWidget {
         title: Text(opt['texto']),//pasamos la variable que los recorre y indicamos el elemento que se va a imprimir
         leading: getIcon( opt['icon'] ),
         trailing: Icon(Icons.keyboard_arrow_right, color:Colors.blue),
-        onTap: (){}, 
+        onTap: (){
+          final route = MaterialPageRoute(
+            builder: ( context ){
+
+              return AlertPage();
+
+            }
+          );
+          Navigator.push(context, route);
+
+        }, 
       );
       opciones..add(widgetTemporal) //pasa,ps a las opciones el widget que creamos
               ..add( Divider() ); //pasamos el divaider
