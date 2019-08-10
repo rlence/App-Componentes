@@ -27,9 +27,6 @@ class HomePage extends StatelessWidget {
       //con el builder pasamos el context y el asyncSnapshot de lista dinamica ya que es un array
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot){
         
-        print('builder');
-        print(snapshot.data);
-
         return ListView(
           //retornamos al clase listView como hijo nuestro componenet a renderizar
           children: _listItems( snapshot.data, context ),
@@ -55,15 +52,8 @@ class HomePage extends StatelessWidget {
         leading: getIcon( opt['icon'] ),
         trailing: Icon(Icons.keyboard_arrow_right, color:Colors.blue),
         onTap: (){
-          final route = MaterialPageRoute(
-            builder: ( context ){
 
-              return AlertPage();
-
-            }
-          );
-          Navigator.push(context, route);
-
+          Navigator.pushNamed(context, opt['ruta']);
         }, 
       );
       opciones..add(widgetTemporal) //pasa,ps a las opciones el widget que creamos
