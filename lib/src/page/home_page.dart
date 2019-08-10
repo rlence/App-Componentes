@@ -1,6 +1,7 @@
-import 'package:componentes/src/provaiders/menu_provaider.dart';
 import 'package:flutter/material.dart';
 
+import 'package:componentes/src/provaiders/menu_provaider.dart';
+import 'package:componentes/src/utils/icono_string_util.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -48,7 +49,7 @@ class HomePage extends StatelessWidget {
 
       final widgetTemporal = ListTile( //creamos una variable temporal que es igual a una list
         title: Text(opt['texto']),//pasamos la variable que los recorre y indicamos el elemento que se va a imprimir
-        leading: Icon(Icons.account_circle, color: Colors.blue),
+        leading: getIcon( opt['icon'] ),
         trailing: Icon(Icons.keyboard_arrow_right, color:Colors.blue),
         onTap: (){}, 
       );
