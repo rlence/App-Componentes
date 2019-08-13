@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
 
     return FutureBuilder(
       future: menuProvaider.cargarData(),//indicamos de donde viene el future
-      //initialData: Text('Loading...'),//informacion por defecto mientras no se resuelva el future
+      initialData:[] ,//informacion por defecto mientras no se resuelva el future
       //con el builder pasamos el context y el asyncSnapshot de lista dinamica ya que es un array
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot){
         
