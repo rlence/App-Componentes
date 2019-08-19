@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-
 class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
 
 class _InputPageState extends State<InputPage> {
-
   String _nombre = '';
   String _email = '';
   String _fecha = '';
+  List<String> _poderes = ['Volar', 'Rayos X', 'Super Fuerza'];
+  String _opcionSeleccionada = 'Volar';
 
   TextEditingController _inputFiledDateController = new TextEditingController();
 
@@ -29,7 +29,9 @@ class _InputPageState extends State<InputPage> {
           Divider(),
           _crearPassword(),
           Divider(),
-          _crearFecha( context ),
+          _crearFecha(context),
+          Divider(),
+          _crearDropdow(),
           Divider(),
           _crearPersona(),
         ],
@@ -38,7 +40,6 @@ class _InputPageState extends State<InputPage> {
   }
 
   Widget _crearInput() {
-
     return TextField(
       //autofocus: true,
       textCapitalization: TextCapitalization.sentences,
@@ -46,73 +47,67 @@ class _InputPageState extends State<InputPage> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        counter: Text('Letras ${ _nombre.length }'),
-        labelText: 'Nombre', //este es el nombre que va en la parte superiror del input
-        hintText: 'Nombre de la persona', //este es el plasholder en html como texto de fondo
+        counter: Text('Letras ${_nombre.length}'),
+        labelText:
+            'Nombre', //este es el nombre que va en la parte superiror del input
+        hintText:
+            'Nombre de la persona', //este es el plasholder en html como texto de fondo
         helperText: 'Solo es el nombre',
         suffixIcon: Icon(Icons.accessibility), //icono al final del input
-        icon: Icon(Icons.account_circle), //icono al prinpicio y al lateral del input
+        icon: Icon(
+            Icons.account_circle), //icono al prinpicio y al lateral del input
       ),
-      onChanged: (valor){
-        
+      onChanged: (valor) {
         setState(() {
           _nombre = valor;
         });
       },
     );
-
   }
 
-
-  Widget  _crearEmail(){
-
+  Widget _crearEmail() {
     return TextField(
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        labelText: 'Email', //este es el nombre que va en la parte superiror del input
-        hintText: 'Tu correo electronico', //este es el plasholder en html como texto de fondo
+        labelText:
+            'Email', //este es el nombre que va en la parte superiror del input
+        hintText:
+            'Tu correo electronico', //este es el plasholder en html como texto de fondo
         helperText: 'Solo es el Email',
         suffixIcon: Icon(Icons.alternate_email), //icono al final del input
         icon: Icon(Icons.email), //icono al prinpicio y al lateral del input
       ),
-      onChanged: (valor){
-        
+      onChanged: (valor) {
         setState(() {
           _email = valor;
         });
       },
     );
-
   }
 
-
-  Widget _crearPassword(){
-
+  Widget _crearPassword() {
     return TextField(
       obscureText: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        labelText: 'Password', //este es el nombre que va en la parte superiror del input
-        hintText: 'Tu contraseña', //este es el plasholder en html como texto de fondo
+        labelText:
+            'Password', //este es el nombre que va en la parte superiror del input
+        hintText:
+            'Tu contraseña', //este es el plasholder en html como texto de fondo
         helperText: 'Solo es el clave',
         suffixIcon: Icon(Icons.lock_open), //icono al final del input
         icon: Icon(Icons.lock), //icono al prinpicio y al lateral del input
       ),
-      onChanged: (valor){
-        
-      
-      },
+      onChanged: (valor) {},
     );
-
   }
 
-  Widget _crearFecha( BuildContext context ){
-
+  Widget _crearFecha(BuildContext context) {
     return TextField(
       controller: _inputFiledDateController,
       enableInteractiveSelection: false,
@@ -120,51 +115,78 @@ class _InputPageState extends State<InputPage> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        labelText: 'Fecha', //este es el nombre que va en la parte superiror del input
-        hintText: 'Fecha de namiento', //este es el plasholder en html como texto de fondo
-        suffixIcon: Icon(Icons.perm_contact_calendar), //icono al final del input
-        icon: Icon(Icons.calendar_today), //icono al prinpicio y al lateral del input
+        labelText:
+            'Fecha', //este es el nombre que va en la parte superiror del input
+        hintText:
+            'Fecha de namiento', //este es el plasholder en html como texto de fondo
+        suffixIcon:
+            Icon(Icons.perm_contact_calendar), //icono al final del input
+        icon: Icon(
+            Icons.calendar_today), //icono al prinpicio y al lateral del input
       ),
-      onTap: (){
-
+      onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
-        _selectDate( context );
-
+        _selectDate(context);
       },
     );
-
   }
 
-  _selectDate( BuildContext context ) async {
-
+  _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: new DateTime.now(), //dia de inicio
-      firstDate: new DateTime(2018), //año de comienzo
-      lastDate: new DateTime(2025), //año de finalizacion
-      locale: Locale('es', 'ES')
-    );
+        context: context,
+        initialDate: new DateTime.now(), //dia de inicio
+        firstDate: new DateTime(2018), //año de comienzo
+        lastDate: new DateTime(2025), //año de finalizacion
+        locale: Locale('es', 'ES'));
 
-    if( picked != null ){
+    if (picked != null) {
       setState(() {
-        
         _fecha = picked.toString();
         _inputFiledDateController.text = _fecha;
       });
     }
-
   }
 
+  //listado para crear menun desplegable
+  List<DropdownMenuItem<String>> getOpcionesDropdowm() {
+    List<DropdownMenuItem<String>> lista = new List();
 
+    _poderes.forEach((poder) {
+      lista.add(DropdownMenuItem(
+        child: Text(poder),
+        value: poder,
+      ));
+    });
 
+    return lista;
+  }
 
-
-  Widget _crearPersona(){
-    return ListTile(
-      title: Text('El nombre es: $_nombre'),
-      subtitle: Text('El email es: $_email'),
+  //imprimir la lista del menu
+  Widget _crearDropdow() {
+    return Row(
+      children: <Widget>[
+        Icon(Icons.select_all),
+        SizedBox(width: 30.0),
+        Expanded(
+          child: DropdownButton(
+            items: getOpcionesDropdowm(),
+            value: _opcionSeleccionada,
+            onChanged: (opt) {
+              setState(() {
+                _opcionSeleccionada = opt;
+              });
+            },
+          ),
+        ),
+      ],
     );
   }
 
-
+  Widget _crearPersona() {
+    return ListTile(
+      title: Text('El nombre es: $_nombre'),
+      subtitle: Text('El email es: $_email'),
+      trailing: Text(_opcionSeleccionada),
+    );
+  }
 }
